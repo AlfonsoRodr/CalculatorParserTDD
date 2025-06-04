@@ -1,4 +1,5 @@
 package es.codeurjc.test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +13,7 @@ public class CalculatorParserTest {
 
     @BeforeEach
     public void setup(){
-        calculator = new CalculatorParser();
+        this.calculator = new CalculatorParser();
     }
 
     @ParameterizedTest

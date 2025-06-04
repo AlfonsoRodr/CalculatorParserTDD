@@ -329,14 +329,201 @@ It will not have any changes due to the explanation provided above.
 ## Test Arithmethic Substraction
 
 ### Test Code
+````java
+@Test
+    public void subTest1() {
+        String expression = "5 - 3";
+        int res = this.calculator.parse(expression);
+        assertEquals(2, res);
+    }
+````
 
 ### Test Fail
+````log
+java.lang.NumberFormatException: For input string: "5 - 3"
+ at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+ at java.base/java.lang.Integer.parseInt(Integer.java:662)
+ at java.base/java.lang.Integer.parseInt(Integer.java:778)
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:10)
+ at es.codeurjc.test.CalculatorParserTest.subTest1(CalculatorParserTest.java:35)
+ at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+ at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+````
 
 ### Minimun Functionality
+````java
+    public int parse(String expression) {
+        if(expression.equals("5 - 3")){
+            return 2;
+        }
+        String[] tokens = expression.split("\\+");
+        int result = 0;
+        for (String token : tokens) {
+            result += Integer.parseInt(token.trim());
+        }
+        return result;
+    }
+}
+````
 
 ### Every Test Pass
 
-### Refactorization (if needed)
+### Test Sub 2
+
+### Test Code
+````java
+@Test
+    public void subTest2() {
+        String expression = "1 - 2";
+        int res = this.calculator.parse(expression);
+        assertEquals(-1, res);
+    }
+}
+````
+
+### Test Fail
+````log
+ java.lang.NumberFormatException: For input string: "1 - 2"
+ at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+ at java.base/java.lang.Integer.parseInt(Integer.java:662)
+ at java.base/java.lang.Integer.parseInt(Integer.java:778)
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:12)
+ at es.codeurjc.test.CalculatorParserTest.subTest2(CalculatorParserTest.java:41)
+ at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+ at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+````
+
+### Minimun Functionality
+````java
+   public int parse(String expression) {
+        if(expression.equals("5 - 3")){
+            return 2;
+        }else if(expression.equals("1 - 2")){
+            return -1;
+        }
+        String[] tokens = expression.split("\\+");
+        int result = 0;
+        for (String token : tokens) {
+            result += Integer.parseInt(token.trim());
+        }
+        return result;
+    }
+}
+````
+
+### Every Test Pass
+### Test Sub 3
+
+### Test Code
+````java
+ @Test
+    public void subTest3() {
+        String expression = "7 - 2 - 1";
+        int res = this.calculator.parse(expression);
+        assertEquals(4, res);
+    }
+````
+
+### Test Fail
+````log
+ java.lang.NumberFormatException: For input string: "7 - 2 - 1"
+ at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+ at java.base/java.lang.Integer.parseInt(Integer.java:662)
+ at java.base/java.lang.Integer.parseInt(Integer.java:778)
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:14)
+ at es.codeurjc.test.CalculatorParserTest.subTest3(CalculatorParserTest.java:47)
+ at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+ at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+````
+
+### Minimun Functionality
+````java
+   public int parse(String expression) {
+        if(expression.equals("5 - 3")){
+            return 2;
+        }else if(expression.equals("1 - 2")){
+            return -1;
+        }else if (expression.equals("7 - 2 - 1")){
+            return 4;
+        }
+        String[] tokens = expression.split("\\+");
+        int result = 0;
+        for (String token : tokens) {
+            result += Integer.parseInt(token.trim());
+        }
+        return result;
+    }
+````
+
+### Every Test Pass
+
+
+### Refactorization
+
+#### Functionality
+````java
+ public int parse(String expression) {
+        if (expression.contains("-")) {
+            String[] tokens = expression.split("-");
+            int result = Integer.parseInt(tokens[0].trim());
+            for (int i = 1; i < tokens.length; i++) {
+            result -= Integer.parseInt(tokens[i].trim());
+            }
+            return result;
+        }
+        String[] tokens = expression.split("\\+");
+        int result = 0;
+        for (String token : tokens) {
+            result += Integer.parseInt(token.trim());
+        }
+        return result;
+    }
+````
+
+#### Test
+````java
+ @ParameterizedTest
+    @ValueSource(strings = {"5 - 3:2", "1 - 2:-1", "7 - 2 - 1:4"})
+    public void subTests(String input) {
+        String[] parts = input.split(":");
+        String expression = parts[0];
+        int expected = Integer.parseInt(parts[1]);
+        int res = this.calculator.parse(expression);
+        assertEquals(expected, res);
+    }
+````
+
+#### Test Pass After Refactoring
+![Test Refac Sum](Screenshots/TestRSum.png)
+
+### Test Sub 4
+
+> [!IMPORTANT]
+> Since we refactorize in the previous test case by applying the `Rule of 3`, in this test case the test will pass and it will only be needed to add this case to the `ParameterizedTest`, aditionally, the functionality will not need any further changes
+
+### Test Code
+````java
+ @ParameterizedTest
+    @ValueSource(strings = {"5 - 3:2", "1 - 2:-1", "7 - 2 - 1:4", "9 - 5 - 3 - 1:0"})
+    public void subTests(String input) {
+        String[] parts = input.split(":");
+        String expression = parts[0];
+        int expected = Integer.parseInt(parts[1]);
+        int res = this.calculator.parse(expression);
+        assertEquals(expected, res);
+    }
+````
+
+### Test Fail
+The test does not fail because of the explanation provided above.
+
+### Minimun Functionality
+It will not have any changes due to the explanation provided above.
+
+### Every Test Pass
+![Test Sum 4](Screenshots/TestPSum4.png)
+
 
 ## Expression with a Single Letter Test
 

@@ -658,7 +658,7 @@ public void mixedOperationsTests(String input) {
 ````
 
 #### Test Pass After Refactoring
-![Test Refac Sub](Screenshots/TestRMO.png)
+![Test Refac Mix Operations](Screenshots/TestRMO.png)
 
 ## Expression with Letters Test
 
@@ -701,7 +701,7 @@ public int parse(String expression) {
 ````
 
 ### Every Test Pass
-![Test SL1](Screenshots/TestSL1.png)
+![Test SL1](Screenshots/TestPSL1.png)
 
 ### Test Case 1
 
@@ -745,7 +745,7 @@ public int parse(String expression) {
 ````
 
 ### Every Test Pass
-![Test SL2](Screenshots/TestSL2.png)
+![Test SL2](Screenshots/TestPSL2.png)
 
 ### Refactorization
 

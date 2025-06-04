@@ -15,6 +15,9 @@
 - [Expresion with Multiple Letters Test](#expression-with-multiple-letters-test)
 - [Expression with Numbers and Letters Test](#expression-with-numbers-and-letters-test)
 
+> [!IMPORTANT]
+> In order to do the refactorization, we apply the `Rule of 3` while refactoring.
+
 ## Test Only One Number
 
 ### Test Number 1
@@ -49,7 +52,7 @@ java.lang.UnsupportedOperationException: Not implemented yet
 ````
 
 ### Every Test Pass
-
+![Test Pass1](https://github.com/AlfonsoRodr/CalculatorParserTDD/blob/main/Screenshots/TestP1.png)
 ### Test Number 2
 
 ### Test Code
@@ -83,7 +86,7 @@ java.lang.UnsupportedOperationException: Not implemented yet
 ````
 
 ### Every Test Pass
-
+![Test Pass2](https://github.com/AlfonsoRodr/CalculatorParserTDD/blob/main/Screenshots/TestP2.png)
 ### Test Number 3
 
 ### Test Code
@@ -120,7 +123,7 @@ java.lang.IllegalArgumentException: Expected number 1
 ````
 
 ### Every Test Pass
-
+![Test Pass3](https://github.com/AlfonsoRodr/CalculatorParserTDD/blob/main/Screenshots/TestP3.png)
 ### Refactorization
 First we refactorize the test
 ````java
@@ -140,15 +143,177 @@ then we do it with the minimum functionality
 
 ## Test Arithmethic Sum
 
+### Test Sum 1
+
 ### Test Code
+````java
+@Test
+public void sumTest1() {
+  String expression = "1 + 1";
+  int res = this.calculator.parse(expression);
+  assertEquals(2, res);
+}
+````
 
 ### Test Fail
+```log
+java.lang.NumberFormatException: For input string: "1 + 1"
+ at java.base/java.lang.NumberFormatException.forInputString(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:6)
+ at es.codeurjc.test.CalculatorParserTest.sumTest1(CalculatorParserTest.java:26)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+````
 
 ### Minimun Functionality
+```java
+public int parse(String expression) {
+  if (expression.equals("1 + 1")) {
+    return 2;
+  }
+  return Integer.parseInt(expression);
+}
+````
 
 ### Every Test Pass
 
-### Refactorization (if needed)
+### Test Sum 2
+
+### Test Code
+````java
+@Test
+public void sumTest2() {
+  String expression = "2 + 3";
+  int res = this.calculator.parse(expression);
+  assertEquals(5, res);
+}
+````
+
+### Test Fail
+```log
+java.lang.NumberFormatException: For input string: "2 + 3"
+ at java.base/java.lang.NumberFormatException.forInputString(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:9)
+ at es.codeurjc.test.CalculatorParserTest.sumTest2(CalculatorParserTest.java:33)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+````
+
+### Minimun Functionality
+```java
+public int parse(String expression) {
+  if (expression.equals("1 + 1")) {
+    return 2;
+  }
+  else if (expression.equals("2 + 3")) {
+    return 5;
+  }
+  return Integer.parseInt(expression);
+}
+````
+
+### Every Test Pass
+
+### Test Sum 3
+
+### Test Code
+````java
+@Test
+public void sumTest3() {
+  String expression = "2 + 3 + 4";
+  int res = this.calculator.parse(expression);
+  assertEquals(9, res);
+}
+````
+
+### Test Fail
+```log
+java.lang.NumberFormatException: For input string: "2 + 3 + 4"
+ at java.base/java.lang.NumberFormatException.forInputString(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:12)
+ at es.codeurjc.test.CalculatorParserTest.sumTest3(CalculatorParserTest.java:40)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+````
+
+### Minimun Functionality
+```java
+public int parse(String expression) {
+  if (expression.equals("1 + 1")) {
+    return 2;
+  }
+  else if (expression.equals("2 + 3")) {
+    return 5;
+  }
+  else if (expression.equals("2 + 3 + 4")) {
+    return 9;
+  }
+  return Integer.parseInt(expression);
+}
+````
+
+### Every Test Pass
+
+### Refactorization
+
+#### Functionality
+````java
+public int parse(String expression) {
+  String[] tokens = expression.split("\\+");
+  int result = 0;
+  for (String token : tokens) {
+      result += Integer.parseInt(token.trim());
+  }
+  return result;
+}
+````
+
+#### Test
+````java
+@ParameterizedTest
+@ValueSource(strings = {"1 + 1:2", "2 + 3:5", "2 + 3 + 4:9"})
+public void sumTests(String input) {
+  String[] parts = input.split(":");
+  String expression = parts[0];
+  int expected = Integer.parseInt(parts[1]);
+  int res = this.calculator.parse(expression);
+  assertEquals(expected, res);
+}
+````
+
+#### Test Pass After Refactoring
+
+### Test Sum 4
+
+> [!IMPORTANT]
+> Since we refactorize in the previous test case by applying the `Rule of 3`, in this test case the test will pass and it will only be needed to add this case to the `ParameterizedTest`, aditionally, the functionality will not need any further changes
+
+### Test Code
+````java
+@ParameterizedTest
+@ValueSource(strings = {"1 + 1:2", "2 + 3:5", "2 + 3 + 4:9", "1 + 2 + 3 + 4:10"})
+public void sumTests(String input) {
+  String[] parts = input.split(":");
+  String expression = parts[0];
+  int expected = Integer.parseInt(parts[1]);
+  int res = this.calculator.parse(expression);
+  assertEquals(expected, res);
+}
+````
+
+### Test Fail
+The test does not fail because of the explanation provided above.
+
+### Minimun Functionality
+It will not have any changes due to the explanation provided above.
+
+### Every Test Pass
 
 ## Test Arithmethic Substraction
 

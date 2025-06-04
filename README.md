@@ -39,6 +39,14 @@ java.lang.UnsupportedOperationException: Not implemented yet
 ````
 
 ### Minimun Functionality
+````java
+   public int parse(String expression) {
+        if ("1".equals(expression)) {
+            return 1;
+        }
+        throw new IllegalArgumentException("Expected number 1");
+    }
+````
 
 ### Every Test Pass
 

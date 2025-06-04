@@ -11,9 +11,8 @@
   - [Test Number 3](#test-number-3) 
 - [Test Arithmethic Sum](#test-arithmethic-sum)
 - [Test Arithmethic Substraction](#test-arithmethic-substraction)
-- [Expression with a Single Letter Test](#expression-with-a-single-letter-test)
-- [Expresion with Multiple Letters Test](#expression-with-multiple-letters-test)
-- [Expression with Numbers and Letters Test](#expression-with-numbers-and-letters-test)
+- [Mixed Arithmethic Operations](#mixed-arithmethic-operations)
+- [Expression with Letters Test](#expression-with-letters-test)
 
 > [!IMPORTANT]
 > In order to do the refactorization, we apply the `Rule of 3` while refactoring.
@@ -525,39 +524,259 @@ It will not have any changes due to the explanation provided above.
 ### Every Test Pass
 ![Test Sum 4](Screenshots/TestPSub4.png)
 
+## Mixed Arithmethic Operations
 
-## Expression with a Single Letter Test
-
-### Test Code
-
-### Test Fail
-
-### Minimun Functionality
-
-### Every Test Pass
-
-### Refactorization (if needed)
-
-## Expression with Multiple Letters Test
+### Test Case 1
 
 ### Test Code
+```java
+@Test
+public void mixedOpperations1 () {
+  String expression = "7 + 1 - 5";
+  int result = this.calculator.parse(expression);
+  assertEquals(3, result);
+}
+````
 
 ### Test Fail
+```log
+java.lang.NumberFormatException: For input string: "7 + 1"
+ at java.base/java.lang.NumberFormatException.forInputString(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:11)
+ at es.codeurjc.test.CalculatorParserTest.mixedOpperations1(CalculatorParserTest.java:46)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+````
 
 ### Minimun Functionality
+```java
+public int parse(String expression) {
+  if (expression.equals("7 + 1 - 5")) {
+      return 3;
+  }
+  if (expression.contains("-")) {
+      String[] tokens = expression.split("-");
+      int result = Integer.parseInt(tokens[0].trim());
+      for (int i = 1; i < tokens.length; i++) {
+        result -= Integer.parseInt(tokens[i].trim());
+      }
+      return result;
+  }
+  String[] tokens = expression.split("\\+");
+  int result = 0;
+  for (String token : tokens) {
+      result += Integer.parseInt(token.trim());
+  }
+  return result;
+}
+````
 
 ### Every Test Pass
+![Test MO 1](Screenshots/TestPMO1.png)
 
-### Refactorization (if needed)
-
-## Expression with Numbers and Letters Test
+### Test Case 1
 
 ### Test Code
+```java
+@Test
+public void mixedOpperations1 () {
+  String expression = "7 + 1 - 5";
+  int result = this.calculator.parse(expression);
+  assertEquals(3, result);
+}
+````
 
 ### Test Fail
+```log
+java.lang.NumberFormatException: For input string: "7 + 1"
+ at java.base/java.lang.NumberFormatException.forInputString(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at java.base/java.lang.Integer.parseInt(Unknown Source)
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:11)
+ at es.codeurjc.test.CalculatorParserTest.mixedOpperations1(CalculatorParserTest.java:46)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+````
 
 ### Minimun Functionality
+```java
+public int parse(String expression) {
+  if (expression.equals("7 + 1 - 5")) {
+      return 3;
+  }
+  if (expression.contains("-")) {
+      String[] tokens = expression.split("-");
+      int result = Integer.parseInt(tokens[0].trim());
+      for (int i = 1; i < tokens.length; i++) {
+        result -= Integer.parseInt(tokens[i].trim());
+      }
+      return result;
+  }
+  String[] tokens = expression.split("\\+");
+  int result = 0;
+  for (String token : tokens) {
+      result += Integer.parseInt(token.trim());
+  }
+  return result;
+}
+````
 
 ### Every Test Pass
+![Test MO 1](Screenshots/TestPMO1.png)
 
-### Refactorization (if needed)
+> [!IMPORTANT]
+> Since this operations mix additions and substraction, we decide to refactorize this "earlier" as we detect this repetition. In the same way that happens in other test cases, we create a `ParameterizedTest` envolving all of the provided examples fo this case.
+
+### Refactorization
+
+#### Functionality
+````java
+ public int parse(String expression) {
+    Pattern pattern = Pattern.compile("([+-]?\\d+)");
+    Matcher matcher = pattern.matcher(expression.replaceAll("\\s+", ""));
+    int result = 0;
+    while (matcher.find()) {
+        result += Integer.parseInt(matcher.group(1));
+    }
+    return result;
+}
+````
+
+#### Test
+````java
+@ParameterizedTest
+@ValueSource(strings = {"7 + 1 - 5:3", "9 - 5 - 4:0", "9 + 1 - 6 - 2:2", "-5 + 9:4"})
+public void mixedOperationsTests(String input) {
+    String[] parts = input.split(":");
+    String expression = parts[0];
+    int expected = Integer.parseInt(parts[1]);
+    int result = this.calculator.parse(expression);
+    assertEquals(expected, result);
+}
+````
+
+#### Test Pass After Refactoring
+![Test Refac Sub](Screenshots/TestRMO.png)
+
+## Expression with Letters Test
+
+### Test Case 1
+
+### Test Code
+```java
+@Test
+public void testSingleLetter1() {
+  String expression = "A";
+  IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> { 
+      this.calculator.parse(expression); 
+  });
+  assertEquals(ERROR_MESSAGE, thrown.getMessage());
+}
+````
+
+### Test Fail
+```log
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
+ at es.codeurjc.test.CalculatorParserTest.testSingleLetter1(CalculatorParserTest.java:59)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+```
+
+### Minimun Functionality
+```java
+public int parse(String expression) {
+    if (expression.equals("A")) {
+          throw new IllegalArgumentException("Letters are not allowed");
+    }
+    Pattern pattern = Pattern.compile("([+-]?\\d+)");
+    Matcher matcher = pattern.matcher(expression.replaceAll("\\s+", ""));
+    int result = 0;
+    while (matcher.find()) {
+        result += Integer.parseInt(matcher.group(1));
+    }
+    return result;
+}
+````
+
+### Every Test Pass
+![Test SL1](Screenshots/TestSL1.png)
+
+### Test Case 1
+
+### Test Code
+```java
+@Test
+public void testSingleLetter2() {
+  String expression = "B";
+  IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> { 
+      this.calculator.parse(expression); 
+  });
+  assertEquals(ERROR_MESSAGE, thrown.getMessage());
+}
+````
+
+### Test Fail
+```log
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
+ at es.codeurjc.test.CalculatorParserTest.testSingleLetter2(CalculatorParserTest.java:68)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+```
+
+### Minimun Functionality
+```java
+public int parse(String expression) {
+    if (expression.equals("A")) {
+          throw new IllegalArgumentException("Letters are not allowed");
+    }
+    else if (expression.equals("B")) {
+          throw new IllegalArgumentException("Letters are not allowed");
+    }
+    Pattern pattern = Pattern.compile("([+-]?\\d+)");
+    Matcher matcher = pattern.matcher(expression.replaceAll("\\s+", ""));
+    int result = 0;
+    while (matcher.find()) {
+        result += Integer.parseInt(matcher.group(1));
+    }
+    return result;
+}
+````
+
+### Every Test Pass
+![Test SL2](Screenshots/TestSL2.png)
+
+### Refactorization
+
+#### Functionality
+````java
+ public int parse(String expression) {
+    String expr = expression.replaceAll("\\s+", "");
+    if (expr.matches(".*[A-Za-z].*")) {
+        throw new IllegalArgumentException("Letters are not allowed");
+    }
+    Pattern pattern = Pattern.compile("([+-]?\\d+)");
+    Matcher matcher = pattern.matcher(expression.replaceAll("\\s+", ""));
+    int result = 0;
+    while (matcher.find()) {
+        result += Integer.parseInt(matcher.group(1));
+    }
+    return result;
+}
+````
+
+#### Test
+````java
+@ParameterizedTest
+@ValueSource(strings = {"A", "B", "k", "HoLa", "1 + A", "Hola + 69 + -678A"})
+public void testExpressionWithLetters(String expression) {
+    IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> { 
+        this.calculator.parse(expression); 
+    });
+    assertEquals(ERROR_MESSAGE, thrown.getMessage());
+}
+````
+
+#### Test Pass After Refactoring
+![Test Refac SL](Screenshots/TestRSL.png)

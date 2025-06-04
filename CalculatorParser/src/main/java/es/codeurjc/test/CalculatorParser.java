@@ -1,20 +1,21 @@
 package es.codeurjc.test;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
 public class CalculatorParser {
 
     public int parse(String expression) {
-        if (expression.contains("-")) {
-            String[] tokens = expression.split("-");
-            int result = Integer.parseInt(tokens[0].trim());
-            for (int i = 1; i < tokens.length; i++) {
-            result -= Integer.parseInt(tokens[i].trim());
-            }
-            return result;
+        String expr = expression.replaceAll("\\s+", "");
+        if (expr.matches(".*[A-Za-z].*")) {
+            throw new IllegalArgumentException("Letters are not allowed");
         }
-        String[] tokens = expression.split("\\+");
+        Pattern pattern = Pattern.compile("([+-]?\\d+)");
+        Matcher matcher = pattern.matcher(expr);
         int result = 0;
-        for (String token : tokens) {
-            result += Integer.parseInt(token.trim());
+        while (matcher.find()) {
+            result += Integer.parseInt(matcher.group(1));
         }
         return result;
     }

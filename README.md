@@ -18,6 +18,14 @@
 ## Test Only One Number
 
 ### Test Number 1
+````java
+   @Test
+    public void TestOneNumber(){
+        String operation = "1";
+        int res = this.calculator.parse(operation);
+        assertEquals(1,res);
+    }
+````
 
 ### Test Code
 

@@ -13,7 +13,7 @@
     <tr>
       <td>Alfonso Rodríguez Gutt</td>
       <td>a.rodriguezgu.2022@alumnos.urjc.es</td>
-      <tr>AlfonsoRodr</tr>
+      <td>AlfonsoRodr</td>
     </tr>
   <tr>
     <td>Marc Burgos Ucendo</td>
@@ -30,8 +30,12 @@
 - [Mixed Arithmethic Operations](#mixed-arithmethic-operations)
 - [Expression with Letters Test](#expression-with-letters-test)
 
+<br>
+
 > [!IMPORTANT]
 > To carry out the refactoring process, we applied the `Rule of Three`, a common best practice in software development. This principle suggests that code duplication should only be refactored once it appears at least three times, ensuring that abstractions are introduced only when they are truly justified.
+
+<br>
 
 > [!NOTE]
 > We used Visual Studio Code's AI features as a tool to assist with some of the refactorings.

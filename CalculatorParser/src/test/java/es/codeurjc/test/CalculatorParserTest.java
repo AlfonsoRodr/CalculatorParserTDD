@@ -54,7 +54,7 @@ public class CalculatorParserTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"A", "B", "k", "HoLa", "1 + A", "Hola + 69 + -678A"})
-    public void testSingleLetter(String expression) {
+    public void testExpressionWithLetters(String expression) {
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> { 
             this.calculator.parse(expression); 
         });

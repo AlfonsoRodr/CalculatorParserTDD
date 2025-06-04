@@ -121,7 +121,7 @@ java.lang.IllegalArgumentException: Expected number 1
 
 ### Every Test Pass
 
-### Refactorization (if needed)
+### Refactorization
 First we refactorize the test
 ````java
   @ParameterizedTest

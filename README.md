@@ -18,6 +18,8 @@
 ## Test Only One Number
 
 ### Test Number 1
+
+### Test Code
 ````java
    @Test
     public void TestOneNumber(){
@@ -27,9 +29,14 @@
     }
 ````
 
-### Test Code
-
 ### Test Fail
+```log
+java.lang.UnsupportedOperationException: Not implemented yet
+ at es.codeurjc.test.CalculatorParser.parse(CalculatorParser.java:6)
+ at es.codeurjc.test.CalculatorParserTest.TestOneNumber(CalculatorParserTest.java:18)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+ at java.base/java.util.ArrayList.forEach(Unknown Source)
+````
 
 ### Minimun Functionality
 

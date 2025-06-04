@@ -52,7 +52,7 @@ java.lang.UnsupportedOperationException: Not implemented yet
 ````
 
 ### Every Test Pass
-![Test Pass1](https://github.com/AlfonsoRodr/CalculatorParserTDD/blob/main/Screenshots/TestP1.png)
+![Test Pass1](Screenshots/TestP1.png)
 ### Test Number 2
 
 ### Test Code
@@ -86,7 +86,7 @@ java.lang.UnsupportedOperationException: Not implemented yet
 ````
 
 ### Every Test Pass
-![Test Pass2](https://github.com/AlfonsoRodr/CalculatorParserTDD/blob/main/Screenshots/TestP2.png)
+![Test Pass2](Screenshots/TestP2.png)
 ### Test Number 3
 
 ### Test Code
@@ -123,23 +123,29 @@ java.lang.IllegalArgumentException: Expected number 1
 ````
 
 ### Every Test Pass
-![Test Pass3](https://github.com/AlfonsoRodr/CalculatorParserTDD/blob/main/Screenshots/TestP3.png)
+![Test Pass3](Screenshots/TestP3.png)
+
 ### Refactorization
-First we refactorize the test
+#### Functionality
 ````java
-  @ParameterizedTest
-    @ValueSource(strings = {"1", "2", "3"})
-    public void testOneNumber(String operation) {
-        int res = this.calculator.parse(operation);
-        assertEquals(Integer.parseInt(operation), res);
-    }
+public int parse(String expression) {
+  return Integer.parseInt(expression);
+}
 ````
-then we do it with the minimum functionality
+
+#### Test
+
 ````java
-  public int parse(String expression) {
-       return Integer.parseInt(expression);
-    }
+@ParameterizedTest
+@ValueSource(strings = {"1", "2", "3"})
+public void testOneNumber(String operation) {
+  int res = this.calculator.parse(operation);
+  assertEquals(Integer.parseInt(operation), res);
+}
 ````
+
+#### Test Pass After Refactoring
+![Test Refac Num](Screenshots/TestRNum.png)
 
 ## Test Arithmethic Sum
 
@@ -178,6 +184,7 @@ public int parse(String expression) {
 ````
 
 ### Every Test Pass
+![Test Sum 1](Screenshots/TestPSum1.png)
 
 ### Test Sum 2
 
@@ -217,6 +224,7 @@ public int parse(String expression) {
 ````
 
 ### Every Test Pass
+![Test Sum 2](Screenshots/TestPSum2.png)
 
 ### Test Sum 3
 
@@ -259,6 +267,7 @@ public int parse(String expression) {
 ````
 
 ### Every Test Pass
+![Test Sum 3](Screenshots/TestPSum3.png)
 
 ### Refactorization
 
@@ -288,6 +297,7 @@ public void sumTests(String input) {
 ````
 
 #### Test Pass After Refactoring
+![Test Refac Sum](Screenshots/TestRSum.png)
 
 ### Test Sum 4
 
@@ -314,6 +324,7 @@ The test does not fail because of the explanation provided above.
 It will not have any changes due to the explanation provided above.
 
 ### Every Test Pass
+![Test Sum 4](Screenshots/TestPSum4.png)
 
 ## Test Arithmethic Substraction
 

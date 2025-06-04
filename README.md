@@ -368,7 +368,7 @@ java.lang.NumberFormatException: For input string: "5 - 3"
 ````
 
 ### Every Test Pass
-
+![Test Sub 1](Screenshots/TestPSub1.png)
 ### Test Sub 2
 
 ### Test Code
@@ -413,6 +413,7 @@ java.lang.NumberFormatException: For input string: "5 - 3"
 ````
 
 ### Every Test Pass
+![Test Sub 2](Screenshots/TestPSub2.png)
 ### Test Sub 3
 
 ### Test Code
@@ -457,7 +458,7 @@ java.lang.NumberFormatException: For input string: "5 - 3"
 ````
 
 ### Every Test Pass
-
+![Test Sub 3](Screenshots/TestPsub3.png)
 
 ### Refactorization
 
@@ -495,7 +496,7 @@ java.lang.NumberFormatException: For input string: "5 - 3"
 ````
 
 #### Test Pass After Refactoring
-![Test Refac Sum](Screenshots/TestRSum.png)
+![Test Refac Sub](Screenshots/TestRSub.png)
 
 ### Test Sub 4
 
@@ -522,7 +523,7 @@ The test does not fail because of the explanation provided above.
 It will not have any changes due to the explanation provided above.
 
 ### Every Test Pass
-![Test Sum 4](Screenshots/TestPSum4.png)
+![Test Sum 4](Screenshots/TestPSub4.png)
 
 
 ## Expression with a Single Letter Test

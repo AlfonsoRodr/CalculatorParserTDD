@@ -18,7 +18,7 @@
   <tr>
     <td>Marc Burgos Ucendo</td>
     <td>m.burgos.2022@alumnos.urjc.es</td>
-    <td>Cazamopis43</td>
+    <td>CazaMopis43</td>
   </tr>
   </tbody>
 </table>
@@ -33,7 +33,7 @@
 <br>
 
 > [!IMPORTANT]
-> To carry out the refactoring process, we applied the `Rule of Three`, a common best practice in software development. This principle suggests that code duplication should only be refactored once it appears at least three times, ensuring that abstractions are introduced only when they are truly justified.
+> To carry out the refactoring process, we applied the `Rule of Three`. This principle suggests that code duplication should only be refactored once it appears at least three times, ensuring that abstractions are introduced only when they are truly justified.
 
 <br>
 

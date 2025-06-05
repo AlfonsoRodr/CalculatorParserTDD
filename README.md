@@ -734,7 +734,7 @@ public int parse(String expression) {
 ![Test SL2](Screenshots/TestPSL2.png)
 
 ### Refactorization
-In this case, a `code smell specifically, duplication` can be observed. Following the `Rule of Three`, we decided to refactor this functionality to eliminate the repeated code and improve maintainability. Additionally, the tests associated with this functionality can be consolidated into a single test using a `@ParameterizedTest`, making the test suite more concise and scalable.
+In this case, a `code smell specifically, duplication` can be observed. We decided to refactor this functionality to eliminate the repeated code and improve maintainability. Additionally, the tests associated with this functionality can be consolidated into a single test using a `@ParameterizedTest`, making the test suite more concise and scalable.
 
 #### Functionality
 ````java
